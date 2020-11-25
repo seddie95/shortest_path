@@ -34,6 +34,10 @@ public class LinkedList {
         return bottom;
     }
 
+    public void setFirst(Node bottom) {
+        this.bottom = bottom;
+    }
+
     public Integer getWeight(Node n) {
         return n.getWeight();
     }
@@ -42,16 +46,58 @@ public class LinkedList {
         n.setWeight(w);
     }
 
+    public Node remove(Integer e) {
+
+        if (bottom.getElement().equals(e)) {
+            bottom = bottom.getNext();
+            return bottom;
+        }
+
+        Node current = bottom;
+
+        boolean notFound = true;
+        while (notFound && current.getNext() != null) {
+            if (current.getNext().getElement().equals(e)) {
+                notFound = false;
+            } else {
+                current = current.getNext();
+            }
+        }
+        if (notFound) {
+            throw new NullPointerException("The Integer " + e + " was not found in the list!");
+        }
+        Node temp = current.getNext();
+        current.setNext(temp.getNext());
+        return bottom;
+
+    }
+
 
     public long getSize() {
         return size;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        Node current = bottom;
+        while (current != null) {
+            int element = current.getElement();
+            int weight = current.getWeight();
+            builder.append("{").append(element).append("=").append(weight).append("} ");
+
+            current = current.getNext();
+        }
+        return builder.toString();
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
-        Node a = list.add(3, null, 1);
-        Node b = list.add(4, null, 3);
-        Node c = list.add(5, null, 6);
+        list.add(3, null, 1);
+        list.add(4, null, 3);
+        list.add(5, null, 6);
+        list.remove(4);
+        System.out.println(list.toString());
 
     }
 

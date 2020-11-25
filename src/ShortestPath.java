@@ -15,6 +15,7 @@ import java.util.Stack;
 public class ShortestPath extends Application {
     private final int WIDTH = 700;
     private final int HEIGHT = 700;
+    private final int GRIDSIZE = 10;
 
     private Boolean sourceSelected = false;
     private Rectangle sourceRectangle;
@@ -31,16 +32,16 @@ public class ShortestPath extends Application {
 
     private Boolean wallSelected = false;
     private Stack<Integer> walls = new Stack<>();
-    private int gridSize = 10;
 
-    private GraphWeighted graph = GraphWeighted.makeGraph(gridSize);
+
+    private GraphWeighted graph = GraphWeighted.makeGraph(GRIDSIZE);
     private Stack<Rectangle> shortestPath = new Stack<>();
 
 
     public void addGrid(GridPane gridPane) {
         int count = 0;
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
+        for (int i = 0; i < GRIDSIZE; i++) {
+            for (int j = 0; j < GRIDSIZE; j++) {
                 Rectangle r1 = new Rectangle(40, 40, Color.WHITE);
                 r1.setStroke(Color.BLACK);
 
@@ -127,7 +128,8 @@ public class ShortestPath extends Application {
 
             if (walls.size() > 0) {
                 for (Integer wall : walls) {
-                    graph.setInfinity(wall);
+//                    graph.setInfinity(wall);
+                    graph.removeEdge(wall);
                 }
             }
 
@@ -141,7 +143,7 @@ public class ShortestPath extends Application {
 
             try {
                 // Retrieve the path for the source and destination
-                Stack<Integer> path = graph.dijkstra(sourceNode, destinationNode);
+                Stack<Integer> path = GraphWeighted.dijkstra(graph,sourceNode, destinationNode);
 
                 boolean possible = true;
                 Stack<Rectangle> possiblePath = new Stack<>();
