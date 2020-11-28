@@ -1,8 +1,8 @@
 package graphs;
 
 public class LinkedList {
-    private Node bottom;        // head node of the list
-    private long size;        // number of nodes in the list
+    private Node bottom;
+    private int size;
 
 
     public LinkedList() {
@@ -17,6 +17,7 @@ public class LinkedList {
 
         if (bottom == null) {
             bottom = new_node;
+            size++;
             return new_node;
         }
         Node current = bottom;
@@ -72,8 +73,7 @@ public class LinkedList {
 
     }
 
-
-    public long getSize() {
+    public int getSize() {
         return size;
     }
 
@@ -89,16 +89,6 @@ public class LinkedList {
             current = current.getNext();
         }
         return builder.toString();
-    }
-
-    public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.add(3, null, 1);
-        list.add(4, null, 3);
-        list.add(5, null, 6);
-        list.remove(4);
-        System.out.println(list.toString());
-
     }
 
 

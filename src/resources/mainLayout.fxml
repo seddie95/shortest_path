@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.261" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Controller">
+    <children>
+        <HBox alignment="CENTER" prefHeight="64.0" prefWidth="600.0" spacing="30.0">
+            <children>
+                <Button mnemonicParsing="true" onMouseClicked="#setSource" text="_Source" />
+                <Button mnemonicParsing="true" onMouseClicked="#setDestination" text="_Destination" />
+                <Button mnemonicParsing="true" onMouseClicked="#setWall" text="Add _Wall" />
+                <Button mnemonicParsing="true" onMouseClicked="#getPath" text="Calculate  _Path" />
+                <Button mnemonicParsing="true" onMouseClicked="#clearGrid" text="_Clear" />
+            </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+        </HBox>
+        <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" prefHeight="302.0" prefWidth="605.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin></GridPane>
+    </children>
+</VBox>

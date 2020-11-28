@@ -36,19 +36,30 @@ public class GraphWeighted {
     public void removeEdge(Integer v) {
         // Delete edges from source and destination linked lists
         LinkedList list = map.get(v);
-        Node current = list.getFirst();
-        while (current != null) {
-            Integer key = current.getElement();
-            map.get(key).remove(v);
-            current = current.getNext();
+        if (list.getSize() > 0) {
+            Node current = list.getFirst();
+            while (current != null) {
+                Integer key = current.getElement();
+                map.get(key).remove(v);
+                current = current.getNext();
+            }
+            map.remove(v);
         }
-        // Set the linked list to be empty
-        map.get(v).setFirst(null);
     }
 
     public LinkedList adjacentEdges(Integer v) {
         // Return the edge for a given vertex
         return map.get(v);
+    }
+
+    public int getEdgeCount() {
+        // Retrieve the total number of edges in the graph
+        int edgeCount = 0;
+        for (Integer key : map.keySet()) {
+            int size = map.get(key).getSize();
+            edgeCount += size;
+        }
+        return edgeCount;
     }
 
 
@@ -70,6 +81,31 @@ public class GraphWeighted {
         return null;
     }
 
+    public void BFS(Integer v) {
+        Queue<Integer> q = new java.util.LinkedList<>();
+        List<Integer> labeled = new ArrayList<>();
+        q.add(v);
+        labeled.add(v);
+        Set<Integer> possibleVertices = new HashSet<>();
+        while (!q.isEmpty()) {
+            Integer vertex = q.remove();
+            System.out.print(vertex + " ");
+            possibleVertices.add(vertex);
+            LinkedList list = adjacentEdges(vertex);
+
+            Node current = list.getFirst();
+            while (current != null) {
+                Integer n = current.getElement();
+                if (!labeled.contains(n)) {
+                    q.add(n);
+                    labeled.add(n);
+                }
+                current = current.getNext();
+            }
+        }
+
+    }
+
 
     public static Stack<Integer> dijkstra(GraphWeighted graph, Integer source, Integer target) {
         Set<Integer> q = new HashSet<>();
@@ -88,7 +124,6 @@ public class GraphWeighted {
 
         // Set the distance from the source to itself as zero
         dist.put(source, 0);
-
         while (!q.isEmpty()) {
             int min = INFINITY;
             int u = 0;
@@ -101,24 +136,34 @@ public class GraphWeighted {
                 }
             }
 
+            // Delete u from the Queue
             q.remove(u);
 
             // Loop over the previous vertices to get shortest path
             if (u == target) {
+                int loopCheck = 0;
                 if (prev.get(u) != null || u == source) {
                     while (prev.get(u) != null) {
+
+                        // Check for infinite loop
+                        if (loopCheck > prev.size()) {
+                            return null;
+                        }
+                        loopCheck++;
                         s.push(u);
                         u = prev.get(u);
                     }
+
                     return s;
                 }
+                return null;
             }
 
             LinkedList list = graph.adjacentEdges(u);
             Node current = list.getFirst();
-
             // Loop over the adjacent edges and add update shortest path
             while (current != null) {
+                // Update the edge count with each new node visited
                 Integer r = current.getElement();
                 int alt = dist.get(u) + graph.getWeight(u, r);
                 if (alt < dist.get(r)) {
@@ -190,17 +235,6 @@ public class GraphWeighted {
         }
 
         return g;
-
-    }
-
-    public static void main(String args[]) {
-
-        GraphWeighted g = GraphWeighted.makeGraph(10);
-
-
-
-        System.out.println(GraphWeighted.dijkstra(g, 1, 8));
-
 
     }
 
