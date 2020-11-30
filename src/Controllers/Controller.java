@@ -20,23 +20,26 @@ public class Controller implements Initializable {
     GridPane gridPane;
     private final int GRIDSIZE = 10;
 
+    // Variables related to the source node
     private Boolean sourceSelected = false;
     private Rectangle sourceRectangle;
     private Integer sourceNode;
 
-
+    // Variables related to the Destination node
     private Boolean destinationSelected = false;
     private Rectangle destinationRectangle;
     private Integer destinationNode;
 
+    // Variables related to the wall node
+    private Boolean wallSelected = false;
+    private Stack<Integer> walls = new Stack<>();
+
+    // Store the position and Rectangle object
     private final HashMap<Rectangle, Integer> gridNode = new HashMap<>();
     private final HashMap<Integer, Rectangle> rectangleItem = new HashMap<>();
 
 
-    private Boolean wallSelected = false;
-    private Stack<Integer> walls = new Stack<>();
-
-
+    // Set up the Graph with size of GridSize
     private GraphWeighted graph = GraphWeighted.makeGraph(GRIDSIZE);
     private final Stack<Rectangle> shortestPath = new Stack<>();
 
@@ -96,16 +99,19 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Initialise the Grid
         addGrid(gridPane);
     }
 
     public void setSource(MouseEvent mouseEvent) {
+        // Set the selected Node as the source
         sourceSelected = true;
         destinationSelected = false;
         wallSelected = false;
     }
 
     public void setDestination(MouseEvent mouseEvent) {
+        // Set the selected Node as the destination
         destinationSelected = true;
         sourceSelected = false;
         wallSelected = false;
@@ -146,7 +152,7 @@ public class Controller implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Impossible Path");
                 alert.setHeaderText(null);
-                alert.setContentText("These are not routes you are looking for!");
+                alert.setContentText("These are not the routes you are looking for!");
                 alert.showAndWait();
             }
         } catch (NullPointerException e) {
@@ -160,6 +166,7 @@ public class Controller implements Initializable {
     }
 
     public void clearGrid(MouseEvent mouseEvent) {
+        // Clear and reset the grid and graph
         gridPane.getChildren().clear();
         addGrid(gridPane);
         sourceSelected = false;
@@ -172,6 +179,7 @@ public class Controller implements Initializable {
     }
 
     public void setWall(MouseEvent mouseEvent) {
+        // Set the selected Node as a wall
         sourceSelected = false;
         destinationSelected = false;
         wallSelected = true;

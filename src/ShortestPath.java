@@ -16,12 +16,12 @@ public class ShortestPath extends Application {
         stage.setHeight(550);
         stage.setResizable(false);
 
+
         // Load the root from the fxml file
         VBox root = FXMLLoader.load(getClass().getResource(("/resources/mainLayout.fxml")));
 
         // Set the scene and the style for the scene
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("resources/styles.css");
 
         // The scene to the stage and display the stage
         stage.setScene(scene);
