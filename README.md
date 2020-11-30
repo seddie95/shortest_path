@@ -5,7 +5,7 @@ Calculates the Shortest Path using Dijkstra's  algorithm.
 
 
 <p align="center">
-  <img width="450"  src="https://i.imgur.com/FXAQC5Q.gif">
+  <img width="450"  src="https://i.imgur.com/FXAQC5Q.gifv">
 </p>
 
 Add walls to the grid and observe the Path avoid those cells
